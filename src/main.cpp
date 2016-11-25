@@ -14,7 +14,9 @@ int main() {
 		tree.insert(i);
 	}
 
-	tree.save_on_file("avl.dat");
+	structures::AVLTree<double> copy;
+	copy = std::move(tree);
 
-	structures::AVLTree<double> loaded{"avl.dat"};
+	tree.print();
+	copy.print();
 }

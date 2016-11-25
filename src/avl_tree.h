@@ -43,6 +43,47 @@ public:
 	}
 
 	/**
+	@brief Copy constructor
+	*/
+	AVLTree(const AVLTree<T>& other) {
+		auto elements = other.pre_order();
+		for (auto i = elements.begin(); i != elements.end(); ++i) {
+			insert(*i);
+		}
+	}
+
+	/**
+	@brief Move constructor
+	*/
+	AVLTree(AVLTree<T>&& other):
+		root{other.root},
+		size_{other.size_}
+	{
+		other.root = nullptr;
+		other.size_ = 0;
+	}
+
+	/**
+	@brief Copy assignment
+	*/
+	AVLTree<T>& operator=(const AVLTree<T>& other) {
+		structures::AVLTree<T> copy{other};
+		std::swap(root, copy.root);
+		std::swap(size_, copy.size_);
+		return *this;
+	}
+
+	/**
+	@brief Move assignment
+	*/
+	AVLTree<T>& operator=(AVLTree<T>&& other) {
+		structures::AVLTree<T> copy{std::move(other)};
+		std::swap(root, copy.root);
+		std::swap(size_, copy.size_);
+		return *this;
+	}
+
+	/**
 	@brief Destructor
 	*/
 	~AVLTree() {
