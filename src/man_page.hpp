@@ -6,6 +6,9 @@
 #include "utils.hpp"
 
 struct ManPage {
+	char name[50];
+	char content[139715];  // biggest man page
+
 	ManPage() = default;
 
 	explicit ManPage(std::string filename) {
@@ -18,29 +21,36 @@ struct ManPage {
 		strcpy(name, str.substr(begin, end).c_str());
 		strcpy(content, str.c_str());
 	}
-
-	inline bool operator<(const ManPage& rhs) const {
-		return strcmp(name, rhs.name) < 0;
-	}
-
-	inline bool operator>(const ManPage& rhs) const {
-		return strcmp(name, rhs.name) > 0;
-	}
-
-	inline bool operator==(const ManPage& rhs) const {
-		return strcmp(name, rhs.name) == 0;
-	}
-
-	inline bool operator!=(const ManPage& rhs) const {
-		return !(*this == rhs);
-	}
-
-	char name[50];
-	char content[139715];  // biggest man page
 };
 
 std::ostream& operator<<(std::ostream& os, const ManPage& mp) {
 	os << mp.name;
+	return os;
+}
+
+struct ManPageRecord {
+	char name[50];
+	std::streampos position;  // position in man_pages.dat
+
+	inline bool operator<(const ManPageRecord& rhs) const {
+		return strcmp(name, rhs.name) < 0;
+	}
+
+	inline bool operator>(const ManPageRecord& rhs) const {
+		return strcmp(name, rhs.name) > 0;
+	}
+
+	inline bool operator==(const ManPageRecord& rhs) const {
+		return strcmp(name, rhs.name) == 0;
+	}
+
+	inline bool operator!=(const ManPageRecord& rhs) const {
+		return !(*this == rhs);
+	}
+};
+
+std::ostream& operator<<(std::ostream& os, const ManPageRecord& mpr) {
+	os << mpr.name;
 	return os;
 }
 
