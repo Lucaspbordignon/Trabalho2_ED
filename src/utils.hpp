@@ -3,17 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
 #include <iterator>
 #include <iostream>
-#include <fstream>
-#include <streambuf>
-#include <memory>
-#include <unistd.h>
 
 std::string read_file(std::string filename);
-
-// executes a linux command
-std::string exec(const std::string cmd);
 
 std::vector<std::string> split(std::string str, const char* c);
 

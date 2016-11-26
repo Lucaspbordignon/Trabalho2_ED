@@ -6,8 +6,7 @@
 #include "man_page.hpp"
 #include "avl_tree.hpp"
 
-void index_man_pages() {
-	auto files_names = split(exec("ls " + MPPATH), "\n");
+void index_man_pages(std::vector<std::string> files_names) {
 	std::cout << files_names.size() << " man pages being indexed\n";
 
 	std::ofstream ofs{MANPAGES};
