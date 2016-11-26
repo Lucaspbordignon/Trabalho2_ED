@@ -3,30 +3,6 @@
 
 #include <cstring>
 #include <iostream>
-#include "utils.hpp"
-
-struct ManPage {
-	char name[50];
-	char content[139715];  // biggest man page
-
-	ManPage() = default;
-
-	explicit ManPage(std::string filename) {
-		auto str = read_file(filename);
-
-		auto begin = str.find_first_of("\n") + 1;
-		// find first space OR comma
-		auto end = str.find_first_of(" ,", begin) - begin;
-
-		strcpy(name, str.substr(begin, end).c_str());
-		strcpy(content, str.c_str());
-	}
-};
-
-std::ostream& operator<<(std::ostream& os, const ManPage& mp) {
-	os << mp.name;
-	return os;
-}
 
 struct ManPageRecord {
 	char name[50];
@@ -49,9 +25,17 @@ struct ManPageRecord {
 	}
 };
 
-std::ostream& operator<<(std::ostream& os, const ManPageRecord& mpr) {
-	os << mpr.name;
-	return os;
-}
+struct ManPage {
+	char name[50];
+	char content[139715];  // biggest man page
+
+	ManPage() = default;
+
+	explicit ManPage(std::string);
+	explicit ManPage(const ManPageRecord&);
+};
+
+std::ostream& operator<<(std::ostream&, const ManPage&);
+std::ostream& operator<<(std::ostream&, const ManPageRecord&);
 
 #endif

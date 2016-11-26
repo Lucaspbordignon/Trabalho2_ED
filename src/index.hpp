@@ -7,7 +7,7 @@
 #include "avl_tree.hpp"
 
 void index_man_pages() {
-	auto files_names = split(exec("ls " + PATH), "\n");
+	auto files_names = split(exec("ls " + MPPATH), "\n");
 	std::cout << files_names.size() << " man pages being indexed\n";
 
 	std::ofstream ofs{MANPAGES};
@@ -23,7 +23,7 @@ Couldn't open file " + MANPAGES);
 	ManPageRecord mpr;
 
 	for (auto i = files_names.begin(); i != files_names.end(); ++i) {
-		mp = ManPage{PATH + *i};
+		mp = ManPage{MPPATH + *i};
 
 		strcpy(mpr.name, mp.name);
 		mpr.position = ofs.tellp();

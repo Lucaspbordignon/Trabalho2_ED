@@ -134,6 +134,13 @@ couldn't open file " + filename);
 		return root ? root->contains(data) : false;
 	}
 
+	const T& find(const T& data) const {
+		if (root)
+			return root->find(data);
+		else
+			throw std::runtime_error("data not contained by tree");
+	}
+
 	/**
 	@brief Returns true if the tree is empty
 	*/
@@ -285,6 +292,20 @@ private:
 					return left ? left->contains(data_) : false;
 				} else {
 					return right ? right->contains(data_) : false;
+				}
+			}
+		}
+
+		const T& find(const T& data_) const {
+			if (data_ == data) {
+				return data;
+			} else {
+				Node* n = data_ < data ? left : right;
+
+				if (!n) {
+					throw std::runtime_error("data not contained by tree");
+				} else {
+					return n->find(data_);
 				}
 			}
 		}
