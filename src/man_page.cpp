@@ -2,7 +2,7 @@
 #include "utils.hpp"
 #include "paths.hpp"
 
-ManPage::ManPage(std::string filename) {
+ManPage::ManPage(const std::string& filename) {
 	auto str = read_file(filename);
 
 	auto begin = str.find_first_of("\n") + 1;
@@ -17,8 +17,8 @@ ManPage::ManPage(const ManPageRecord& mpr) {
 	std::ifstream ifs{MANPAGES};
 
 	if (!ifs) {
-		throw std::runtime_error("ManPage::ManPage(ManPageRecord) :\
-Couldn't open file " + MANPAGES);
+		throw std::runtime_error("ManPage::ManPage(ManPageRecord) : "
+				"Couldn't open file " + MANPAGES);
 	}
 
 	ifs.seekg(mpr.position);
