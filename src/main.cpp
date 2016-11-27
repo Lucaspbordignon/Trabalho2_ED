@@ -3,8 +3,11 @@
 #include <iostream>
 
 int main(int argc, char** argv) {
-	if (argv[1])
+	if (strcmp(argv[1], "index") == 0) {
 		index_man_pages();
-	std::cout << search_by_name(argv[2]).content << std::endl;
+		inverted_index();
+	} else {
+		std::cout << search_by_name(argv[1]).content << std::endl;
+	}
 	return 0;
 }
