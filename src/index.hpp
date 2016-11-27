@@ -7,8 +7,10 @@
 #include "avl_tree.hpp"
 
 void index_man_pages(std::vector<std::string> files_names) {
-	std::cout << files_names.size() << " man pages being indexed\n";
+	auto n = files_names.size();
+	std::cout << n << " man pages being indexed\n";
 
+	std::remove(MANPAGES.c_str());
 	std::ofstream ofs{MANPAGES};
 
 	if (!ofs) {
@@ -21,8 +23,12 @@ Couldn't open file " + MANPAGES);
 	ManPage mp;
 	ManPageRecord mpr;
 
-	for (auto i = files_names.begin(); i != files_names.end(); ++i) {
-		mp = ManPage{MPPATH + *i};
+	std::cout << "Reading man pages and saving to " << MANPAGES << std::endl;
+
+	for (auto i = 0u; i < n; ++i) {
+		show_progress(((float)i+1)/((float)n));
+
+		mp = ManPage{files_names[i]};
 
 		strcpy(mpr.name, mp.name);
 		mpr.position = ofs.tellp();
@@ -34,6 +40,7 @@ Couldn't open file " + MANPAGES);
 
 	ofs.close();
 
+	std::cout << std::endl << "Saving inverted tree to " << MPTREE << std::endl;
 	mptree.save_on_file(MPTREE);
 }
 

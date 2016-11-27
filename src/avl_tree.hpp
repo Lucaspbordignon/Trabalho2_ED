@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <vector>
 #include <fstream>
+#include "utils.hpp"
 
 namespace structures {
 
@@ -218,12 +219,16 @@ couldn't open file " + filename);
 
 		std::size_t data_size = sizeof(T);
 
-		for (auto i = vec.begin(); i != vec.end(); ++i) {
-			T data{*i};
+		auto n = vec.size();
+		for (auto i = 0u; i < n; ++i) {
+			//show_progress(((float)i+1)/((float)n));
+			T data{vec[i]};
 			ofs.write((char*) &data, data_size);
 		}
 
 		ofs.close();
+
+		//std::cout << std::endl;
 	}
 
 private:

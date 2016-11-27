@@ -33,3 +33,20 @@ void print_vector(std::vector<T> v) {
 	std::copy(v.begin(), v.end(),
 			std::ostream_iterator<T>(std::cout, ", "));
 }
+
+void show_progress(float percentage) {
+	if (percentage > 1) {
+		throw std::logic_error("percentage over 100");
+	} else {
+		int barWidth = 70;
+
+	    std::cout << "[";
+		int pos = barWidth * percentage;
+		for (int i = 0; i < barWidth; ++i) {
+			if (i < pos) std::cout << "#";
+			else std::cout << "-";
+		}
+		std::cout << "] " << int(percentage * 100.0) << " %\r";
+		std::cout.flush();
+	}
+}
