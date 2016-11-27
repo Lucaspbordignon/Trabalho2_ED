@@ -46,7 +46,7 @@ Couldn't open file " + MANPAGES);
 
 	ofs.close();
 
-	std::cout << std::endl << "Saving inverted tree to " << MPTREE << std::endl;
+	std::cout << "Saving inverted tree to " << MPTREE << std::endl;
 	mptree.save_on_file(MPTREE);
 }
 

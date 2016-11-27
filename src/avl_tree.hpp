@@ -29,8 +29,8 @@ public:
 
 		if (!ifs) {
 			throw std::runtime_error(
-					"structures::AVLTree::AVLTree(const std::string) : \
-couldn't open file " + filename);
+					"structures::AVLTree::AVLTree(const std::string) : "
+					"Couldn't open file " + filename);
 		}
 
 		T data;
@@ -211,8 +211,8 @@ couldn't open file " + filename);
 
 		if (!ofs) {
 			throw std::runtime_error(
-					"structures::AVLTree::save_on_file(const std::string) : \
-couldn't open file " + filename);
+				"void structures::AVLTree::save_on_file(const std::string) : "
+				"Couldn't open file " + filename);
 		}
 
 		auto vec = pre_order();

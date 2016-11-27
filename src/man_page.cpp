@@ -17,8 +17,8 @@ ManPage::ManPage(const ManPageRecord& mpr) {
 	std::ifstream ifs{MANPAGES};
 
 	if (!ifs) {
-		throw std::runtime_error("ManPage::ManPage(ManPageRecord) :\
-Couldn't open file " + MANPAGES);
+		throw std::runtime_error("ManPage::ManPage(ManPageRecord) : "
+				"Couldn't open file " + MANPAGES);
 	}
 
 	ifs.seekg(mpr.position);

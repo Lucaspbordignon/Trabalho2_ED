@@ -5,8 +5,8 @@ std::string read_file(const std::string& filename) {
 	std::ifstream ifs{filename};
 
 	if (!ifs) {
-		throw std::runtime_error("std::string read_file(std::string) : \
-Couldn't open file " + filename);
+		throw std::runtime_error("std::string read_file(std::string) : "
+				"Couldn't open file " + filename);
 	}
 
 	return std::string{std::istreambuf_iterator<char>(ifs),
@@ -29,14 +29,18 @@ std::vector<std::string> split(const std::string& str, const char* c) {
 }
 
 template<typename T>
-void print_vector(const std::vector<T>& v) {
-	std::copy(v.begin(), v.end(),
-			std::ostream_iterator<T>(std::cout, ", "));
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
+	os << "{";
+	auto it = v.begin();
+	for (; it != v.end() - 1; ++it) {
+		os << *it << ", ";
+	}
+	os << *it << "}";
+	return os;
 }
 
-void show_progress(float percentage) {
+void show_progress(const float percentage) {
 	if (percentage <= 1) {
-
 		std::cout << "[";
 		int pos = barWidth * percentage;
 		for (int i = 0; i < barWidth; ++i) {
@@ -45,5 +49,8 @@ void show_progress(float percentage) {
 		}
 		std::cout << "] " << int(percentage * 100.0) << " %\r";
 		std::cout.flush();
+		if (percentage == 1) {
+			std::cout << std::endl;
+		}
 	}
 }
