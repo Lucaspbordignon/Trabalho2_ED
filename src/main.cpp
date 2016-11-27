@@ -6,9 +6,7 @@ int main(int argc, char** argv) {
 	if (argc < 2) {
 		std::cout << "Usage:\n" << argv[0] << " -i files\n" <<
 			argv[0] << " -s command\n";
-		return 1;
-	}
-	if (strcmp(argv[1], "-i") == 0) {
+	} else if (strcmp(argv[1], "-i") == 0) {
 		std::vector<std::string> files;
 		for (int i = 2; i < argc; ++i) {
 			files.push_back(argv[i]);
@@ -22,5 +20,6 @@ int main(int argc, char** argv) {
 			std::cout << "Command " << argv[2] << " not found" << std::endl;
 		}
 	}
+
 	return 0;
 }
