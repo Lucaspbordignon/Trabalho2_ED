@@ -1,6 +1,7 @@
 #include "utils.hpp"
+#define barWidth 70
 
-std::string read_file(std::string filename) {
+std::string read_file(const std::string& filename) {
 	std::ifstream ifs{filename};
 
 	if (!ifs) {
@@ -8,12 +9,11 @@ std::string read_file(std::string filename) {
 Couldn't open file " + filename);
 	}
 
-	std::string content{std::istreambuf_iterator<char>(ifs),
+	return std::string{std::istreambuf_iterator<char>(ifs),
 		std::istreambuf_iterator<char>()};
-	return content;
 }
 
-std::vector<std::string> split(std::string str, const char* c) {
+std::vector<std::string> split(const std::string& str, const char* c) {
 	std::vector<std::string> output;
 
 	std::size_t begin = 0;
@@ -29,18 +29,15 @@ std::vector<std::string> split(std::string str, const char* c) {
 }
 
 template<typename T>
-void print_vector(std::vector<T> v) {
+void print_vector(const std::vector<T>& v) {
 	std::copy(v.begin(), v.end(),
 			std::ostream_iterator<T>(std::cout, ", "));
 }
 
 void show_progress(float percentage) {
-	if (percentage > 1) {
-		throw std::logic_error("percentage over 100");
-	} else {
-		int barWidth = 70;
+	if (percentage <= 1) {
 
-	    std::cout << "[";
+		std::cout << "[";
 		int pos = barWidth * percentage;
 		for (int i = 0; i < barWidth; ++i) {
 			if (i < pos) std::cout << "#";

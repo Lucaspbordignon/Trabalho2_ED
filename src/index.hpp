@@ -6,7 +6,7 @@
 #include "man_page.hpp"
 #include "avl_tree.hpp"
 
-void index_man_pages(std::vector<std::string> files_names) {
+void index_man_pages(const std::vector<std::string>& files_names) {
 	auto n = files_names.size();
 	std::cout << n << " man pages being indexed\n";
 
@@ -25,8 +25,13 @@ Couldn't open file " + MANPAGES);
 
 	std::cout << "Reading man pages and saving to " << MANPAGES << std::endl;
 
+	int t = n / 10;
+	float percentage = 0;
+
 	for (auto i = 0u; i < n; ++i) {
-		show_progress(((float)i+1)/((float)n));
+		if (i % t == 0) {
+			show_progress(percentage += 0.1);
+		}
 
 		mp = ManPage{files_names[i]};
 
@@ -37,6 +42,7 @@ Couldn't open file " + MANPAGES);
 
 		mptree.insert(mpr);
 	}
+	show_progress(1);
 
 	ofs.close();
 

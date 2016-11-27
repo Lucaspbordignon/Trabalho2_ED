@@ -2,7 +2,7 @@
 #include "utils.hpp"
 #include "paths.hpp"
 
-ManPage::ManPage(std::string filename) {
+ManPage::ManPage(const std::string& filename) {
 	auto str = read_file(filename);
 
 	auto begin = str.find_first_of("\n") + 1;

@@ -31,7 +31,7 @@ struct ManPage {
 
 	ManPage() = default;
 
-	explicit ManPage(std::string);
+	explicit ManPage(const std::string&);
 	explicit ManPage(const ManPageRecord&);
 };
 
