@@ -97,11 +97,14 @@ public:
 	*/
 	void insert(const T& data) {
 		if (root) {
-			root->insert(data);
+			try {
+				root->insert(data);
+				++size_;
+			} catch(std::runtime_error& e) {}
 		} else {
 			root = new Node(data);
+			++size_;
 		}
-		++size_;
 	}
 
 	/**
@@ -249,7 +252,6 @@ private:
 				} else {
 					left = new Node(data_, this);
 				}
-				update();
 			} else if (data_ > data) {
 				// insert right
 				if (right) {
@@ -257,8 +259,10 @@ private:
 				} else {
 					right = new Node(data_, this);
 				}
-				update();
+			} else {
+				throw std::runtime_error("Element already on the tree");
 			}
+			update();
 		}
 
 		bool remove(const T& data_) {
