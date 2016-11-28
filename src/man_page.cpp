@@ -14,7 +14,7 @@ ManPage::ManPage(const std::string& filename) {
 }
 
 ManPage::ManPage(const ManPageRecord& mpr) {
-	std::ifstream ifs{MANPAGES};
+	std::ifstream ifs{MANPAGES, std::ifstream::binary};
 
 	if (!ifs) {
 		throw std::runtime_error("ManPage::ManPage(ManPageRecord) : "

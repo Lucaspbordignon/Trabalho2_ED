@@ -25,7 +25,7 @@ public:
 	@param filename Path to the file that'll be loaded
 	*/
 	explicit AVLTree(const std::string filename) {
-		std::ifstream ifs{filename};
+		std::ifstream ifs{filename, std::ifstream::binary};
 
 		if (!ifs) {
 			throw std::runtime_error(
@@ -207,7 +207,8 @@ public:
 	@param filename Path to save the file
 	*/
 	void save_on_file(const std::string filename) const {
-		std::ofstream ofs{filename};
+		std::ofstream ofs{filename,
+			std::ofstream::binary | std::ofstream::trunc};
 
 		if (!ofs) {
 			throw std::runtime_error(
