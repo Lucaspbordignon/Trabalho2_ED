@@ -36,7 +36,7 @@ struct ManPage {
 };
 
 struct Word {
-	char word[50];
+	char name[50];
 
 	unsigned int index = 0;
 
@@ -48,15 +48,15 @@ struct Word {
 	}
 
 	inline bool operator<(const Word& rhs) const {
-		return strcmp(word, rhs.word) < 0;
+		return strcmp(name, rhs.name) < 0;
 	}
 
 	inline bool operator>(const Word& rhs) const {
-		return strcmp(word, rhs.word) > 0;
+		return strcmp(name, rhs.name) > 0;
 	}
 
 	inline bool operator==(const Word& rhs) const {
-		return strcmp(word, rhs.word) == 0;
+		return strcmp(name, rhs.name) == 0;
 	}
 
 	inline bool operator!=(const Word& rhs) const {
@@ -65,19 +65,19 @@ struct Word {
 };
 
 struct WordPtr {
-	char word[50];
+	char name[50];
 	std::streampos pos = 0;
 
 	inline bool operator<(const WordPtr& rhs) const {
-		return strcmp(word, rhs.word) < 0;
+		return strcmp(name, rhs.name) < 0;
 	}
 
 	inline bool operator>(const WordPtr& rhs) const {
-		return strcmp(word, rhs.word) > 0;
+		return strcmp(name, rhs.name) > 0;
 	}
 
 	inline bool operator==(const WordPtr& rhs) const {
-		return strcmp(word, rhs.word) == 0;
+		return strcmp(name, rhs.name) == 0;
 	}
 
 	inline bool operator!=(const WordPtr& rhs) const {

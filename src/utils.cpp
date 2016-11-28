@@ -52,19 +52,9 @@ void print_vector(std::vector<T> v) {
 			std::ostream_iterator<T>(std::cout, ", "));
 }
 
-const std::vector<std::string> connection_words = {
-	"and", "that", "but", "or", "as", "if", "when", "than", "because",
-	"while", "where", "after", "so", "though", "since", "until",
-	"whether", "before", "although", "nor", "like", "once", "unless",
-   	"now", "except", "<->", "a", "the", "of", "to", "into", "by",
-	"for", "on", "at", "in", "next", "then", "more", "only", "always",
-	"never", "all", "off", "with", "this"
-};
-
 void replace_chars(std::string& str, const std::string& to_replace, const char by) {
-	for (auto i = to_replace.begin(); i != to_replace.end(); ++i) {
+	for (auto i = to_replace.begin(); i != to_replace.end(); ++i)
 		std::replace(str.begin(), str.end(), *i, by);
-	}
 }
 
 bool check_word(std::string str) {
@@ -72,22 +62,20 @@ bool check_word(std::string str) {
 	return !found && (str.size() > 2);
 }
 
-const std::string SPECIAL_CHARS = "\n\r\t,.;\"'!@#$%%^&*()[]{}+-/<>?\\`~_:|0123456789";
-
 std::set<std::string> words_into_text(std::string text) {
-	std::set<std::string> valid;
+	std::set<std::string> valid_words;
 
+	// Transform the 'text' to lowercase
 	std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 
-	replace_chars(text, SPECIAL_CHARS, ' ');
+	// Replaces all the special characters with spaces, for 'split'.
+	replace_chars(text, special_chars, ' ');
 
 	auto wordvec = split(text, " ");
 
 	for (auto i = wordvec.begin(); i != wordvec.end(); ++i) {
-		if (check_word(*i)) {
-			valid.insert(*i);
-		}
+		if (check_word(*i))
+			valid_words.insert(*i);
 	}
-
-	return valid;
+	return valid_words;
 }
