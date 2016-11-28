@@ -38,6 +38,16 @@ void search_by_word(std::string text) {
 	input.read((char*)&word, sizeof(Word));
 	input.close();
 
+	std::ifstream all_manpages(MANPAGES, std::ios::in | std::ios::binary);
+	for (auto i = 0; i <= word.index; ++i) {
+		ManPage mp;
+		all_manpages.seekg(word.pos[i]);
+		all_manpages.read((char*)&mp, sizeof(ManPage));
+		std::cout << "Command: " << mp.name << std::endl;
+	}
+	all_manpages.close();
+
+
 	std::cout << word.index << " manpages have this word." << std::endl;
 	tree.save_on_file(INVERTED_INDEX_TREE);
 }
