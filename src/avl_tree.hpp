@@ -243,13 +243,15 @@ private:
 				} else {
 					left = new Node(data_, this);
 				}
-			} else {
+			} else if (data_ > data) {
 				// insert right
 				if (right) {
 					right->insert(data_);
 				} else {
 					right = new Node(data_, this);
 				}
+			} else {
+				return;
 			}
 			update();
 		}

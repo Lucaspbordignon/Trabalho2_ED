@@ -35,56 +35,6 @@ struct ManPage {
 	explicit ManPage(const ManPageRecord&);
 };
 
-struct Word {
-	char name[50];
-
-	unsigned int index = 0;
-
-	std::streampos pos[5650];
-
-	void add(std::streampos _pos) {
-		pos[index] = _pos;
-		++index;
-	}
-
-	inline bool operator<(const Word& rhs) const {
-		return strcmp(name, rhs.name) < 0;
-	}
-
-	inline bool operator>(const Word& rhs) const {
-		return strcmp(name, rhs.name) > 0;
-	}
-
-	inline bool operator==(const Word& rhs) const {
-		return strcmp(name, rhs.name) == 0;
-	}
-
-	inline bool operator!=(const Word& rhs) const {
-		return !(*this == rhs);
-	}
-};
-
-struct WordPtr {
-	char name[50];
-	std::streampos pos = 0;
-
-	inline bool operator<(const WordPtr& rhs) const {
-		return strcmp(name, rhs.name) < 0;
-	}
-
-	inline bool operator>(const WordPtr& rhs) const {
-		return strcmp(name, rhs.name) > 0;
-	}
-
-	inline bool operator==(const WordPtr& rhs) const {
-		return strcmp(name, rhs.name) == 0;
-	}
-
-	inline bool operator!=(const WordPtr& rhs) const {
-		return !(*this == rhs);
-	}
-};
-
 std::ostream& operator<<(std::ostream&, const ManPage&);
 std::ostream& operator<<(std::ostream&, const ManPageRecord&);
 

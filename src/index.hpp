@@ -4,39 +4,33 @@
 #include "paths.hpp"
 #include "utils.hpp"
 #include "man_page.hpp"
+#include "word.hpp"
 #include "avl_tree.hpp"
 
 // Add a manpage into an existing word. Means that the record already exists
 // into the tree.
 void add_manpage_to_word(WordPtr& wordptr, std::streampos pos) {
 	Word word;
-	std::ifstream input(INVERTED_INDEX, std::ios::in | std::ios::binary);
+	std::fstream fs{INVERTED_INDEX,
+		std::ios::in | std::ios::out | std::ios::binary};
 
-	if (!input) {
+	if (!fs) {
 		throw std::runtime_error("add_manpage_to_word(): Couldn't open file");
 	}
 
-	input.seekg(wordptr.pos);
-	input.read((char*) &word, sizeof(Word));
-	input.close();
+	fs.seekg(wordptr.pos);
+	fs.read((char*) &word, sizeof(Word));
+	fs.close();
 
 	word.add(pos);
 
-	std::ofstream output(INVERTED_INDEX, std::ios::out |
-					std::ios::in | std::ios::binary);
-
-	if (!output) {
-		throw std::runtime_error("add_manpage_to_word(): Couldn't open file");
-	}
-
-	output.seekp(wordptr.pos);
-	output.write((char*) &word, sizeof(Word));
-	output.close();
+	fs.seekp(wordptr.pos);
+	fs.write((char*) &word, sizeof(Word));
+	fs.close();
 }
 
 std::streampos add_new_word(Word& word) {
-	std::ofstream output(INVERTED_INDEX, std::ios::out |
-			std::ios::app | std::ios::binary);
+	std::ofstream output{INVERTED_INDEX, std::ios::app | std::ios::binary};
 
 	if (!output) {
 		throw std::runtime_error("add_new_word(): Couldn't open file");
@@ -55,9 +49,9 @@ void inverted_index() {
 	std::cout << "Generating the inverted index file." << std::endl;
 	auto already_indexed = 0;
 
-	std::ofstream ofs(INVERTED_INDEX, std::ios::out | std::ios::binary);
+	std::ofstream ofs{INVERTED_INDEX, std::ios::out | std::ios::binary};
 	ofs.close();
-	std::ifstream all_manpages(MANPAGES, std::ios::in | std::ios::binary);
+	std::ifstream all_manpages{MANPAGES, std::ios::in | std::ios::binary};
 
 	if (!all_manpages) {
 		throw std::runtime_error("inverted_index(): Couldn't open file");
