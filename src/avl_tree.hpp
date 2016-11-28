@@ -249,15 +249,16 @@ private:
 				} else {
 					left = new Node(data_, this);
 				}
-			} else {
+				update();
+			} else if (data_ > data) {
 				// insert right
 				if (right) {
 					right->insert(data_);
 				} else {
 					right = new Node(data_, this);
 				}
+				update();
 			}
-			update();
 		}
 
 		bool remove(const T& data_) {

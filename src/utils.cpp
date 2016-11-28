@@ -20,9 +20,14 @@ std::set<std::string> split(const std::string& str, const char* c) {
 	auto end = str.find_first_of(c);
 
 	while (end != std::string::npos) {
-		output.insert(str.substr(begin, end - begin));
+		if (end - begin)
+			output.insert(str.substr(begin, end - begin));
 		begin = end + 1;
 		end = str.find_first_of(c, begin);
+	}
+
+	if (str.length() - begin) {
+		output.insert(str.substr(begin, str.length() - begin));
 	}
 
 	return output;
@@ -53,4 +58,32 @@ void show_progress(const float percentage) {
 			std::cout << std::endl;
 		}
 	}
+}
+
+void replace_chars(std::string& str, const std::string& to_replace, const char by) {
+	for (auto i = to_replace.begin(); i != to_replace.end(); ++i)
+		std::replace(str.begin(), str.end(), *i, by);
+}
+
+bool check_word(std::string str) {
+	auto found = find(connection_words.begin(), connection_words.end(), str) != connection_words.end();
+	return !found && (str.size() > 2);
+}
+
+std::set<std::string> words_into_text(std::string text) {
+	std::set<std::string> valid_words;
+
+	// Transform the 'text' to lowercase
+	std::transform(text.begin(), text.end(), text.begin(), ::tolower);
+
+	// Replaces all the special characters with spaces, for 'split'.
+	replace_chars(text, special_chars, ' ');
+
+	auto wordvec = split(text, " ");
+
+	for (auto i = wordvec.begin(); i != wordvec.end(); ++i) {
+		if (check_word(*i))
+			valid_words.insert(*i);
+	}
+	return valid_words;
 }

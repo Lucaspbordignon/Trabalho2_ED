@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
 			files.push_back(argv[i]);
 		}
 		index_man_pages(files);
+		inverted_index();
 	} else if (strcmp(argv[1], "-s") == 0) {
 		try {
 			std::cout << "Command " << search_by_name(argv[2]) << " found"
@@ -19,7 +20,8 @@ int main(int argc, char** argv) {
 		} catch(std::runtime_error e) {
 			std::cout << "Command " << argv[2] << " not found" << std::endl;
 		}
+	} else if (strcmp(argv[1], "-w") == 0) {
+		search_by_word(argv[2]);
 	}
-
 	return 0;
 }
