@@ -207,8 +207,8 @@ public:
 	@param filename Path to save the file
 	*/
 	void save_on_file(const std::string filename) const {
-		std::ofstream ofs{filename,
-			std::ofstream::binary | std::ofstream::trunc};
+		std::remove(filename.c_str());
+		std::ofstream ofs{filename, std::ofstream::binary};
 
 		if (!ofs) {
 			throw std::runtime_error(

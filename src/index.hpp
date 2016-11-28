@@ -10,11 +10,12 @@ void index_man_pages(const std::vector<std::string>& files_names) {
 	auto n = files_names.size();
 	std::cout << n << " man pages being indexed\n";
 
-	std::ofstream ofs{MANPAGES, std::ofstream::trunc | std::ofstream::binary};
+	std::remove(MANPAGES.c_str());
+	std::ofstream ofs{MANPAGES, std::ofstream::binary};
 
 	if (!ofs) {
-		throw std::runtime_error("void index_man_pages() :\
-Couldn't open file " + MANPAGES);
+		throw std::runtime_error("void index_man_pages() : Couldn't open file "
+				+ MANPAGES);
 	}
 
 	structures::AVLTree<ManPageRecord> mptree;
