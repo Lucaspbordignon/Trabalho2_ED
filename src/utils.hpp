@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <fstream>
 #include <iterator>
 #include <iostream>
@@ -20,7 +21,7 @@ std::string read_file(const std::string& filename);
  * @param str The string that'll be splitted
  * @param c The char where the string will be splitted
  */
-std::vector<std::string> split(const std::string& str, const char* c);
+std::set<std::string> split(const std::string& str, const char* c);
 
 /**
  * @brief Overloads the << operator for std::vector for printing

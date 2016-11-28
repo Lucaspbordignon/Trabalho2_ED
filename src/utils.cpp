@@ -13,14 +13,14 @@ std::string read_file(const std::string& filename) {
 		std::istreambuf_iterator<char>()};
 }
 
-std::vector<std::string> split(const std::string& str, const char* c) {
-	std::vector<std::string> output;
+std::set<std::string> split(const std::string& str, const char* c) {
+	std::set<std::string> output;
 
 	std::size_t begin = 0;
 	auto end = str.find_first_of(c);
 
-	while (begin < str.length()) {
-		output.push_back(str.substr(begin, end - begin));
+	while (end != std::string::npos) {
+		output.insert(str.substr(begin, end - begin));
 		begin = end + 1;
 		end = str.find_first_of(c, begin);
 	}
