@@ -10,6 +10,8 @@ struct WordPtr {
 	char name[50];
 	std::streampos pos = 0;
 
+	void add_manpage_to_word(const std::streampos&) const;
+
 	inline bool operator<(const WordPtr& rhs) const {
 		return strcmp(name, rhs.name) < 0;
 	}
@@ -30,7 +32,7 @@ struct WordPtr {
 struct Word {
 	char name[50];
 	std::size_t index = 0u;
-	std::streampos pos[5650];
+	std::streampos pos[5642];
 
 	Word() = default;
 

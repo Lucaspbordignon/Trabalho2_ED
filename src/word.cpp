@@ -34,3 +34,26 @@ std::set<ManPage> Word::find_man_pages() const {
 
 	return output;
 }
+
+// Add a manpage into an existing word. Means that the record already exists
+// into the tree.
+void WordPtr::add_manpage_to_word(const std::streampos& mp_position) const {
+	std::fstream fs{INVERTED_INDEX,
+		std::ios::in | std::ios::out | std::ios::binary};
+
+	if (!fs) {
+		throw std::runtime_error("add_manpage_to_word(): Couldn't open file");
+	}
+
+	Word word;
+
+	fs.seekg(pos);
+	fs.read((char*) &word, sizeof(Word));
+
+	word.add(mp_position);
+
+	fs.seekp(pos);
+	fs.write((char*) &word, sizeof(Word));
+
+	fs.close();
+}

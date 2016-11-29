@@ -7,28 +7,6 @@
 #include "word.hpp"
 #include "avl_tree.hpp"
 
-// Add a manpage into an existing word. Means that the record already exists
-// into the tree.
-void add_manpage_to_word(const WordPtr& wordptr, const std::streampos pos) {
-	Word word;
-	std::fstream fs{INVERTED_INDEX,
-		std::ios::in | std::ios::out | std::ios::binary};
-
-	if (!fs) {
-		throw std::runtime_error("add_manpage_to_word(): Couldn't open file");
-	}
-
-	fs.seekg(wordptr.pos);
-	fs.read((char*) &word, sizeof(Word));
-
-	word.add(pos);
-
-	fs.seekp(wordptr.pos);
-	fs.write((char*) &word, sizeof(Word));
-
-	fs.close();
-}
-
 std::streampos add_new_word(Word& word) {
 	std::ofstream output{INVERTED_INDEX, std::ios::app | std::ios::binary};
 
@@ -46,6 +24,8 @@ std::streampos add_new_word(Word& word) {
 void inverted_index() {
 	// Creates the tree with the valid words
 	std::cout << "Generating the inverted index file." << std::endl;
+
+	std::remove(INVERTED_INDEX.c_str());
 
 	structures::AVLTree<WordPtr> word_tree;
 
@@ -90,11 +70,13 @@ void inverted_index() {
 			}
 
 			if (found)
-				add_manpage_to_word(wpfound, current_pos);
+				wpfound.add_manpage_to_word(current_pos);
 		}
 	}
+
 	all_manpages.close();
 	word_tree.save_on_file(INVERTED_INDEX_TREE);
+
 	std::cout << std::endl << "Done." << std::endl;
 }
 
