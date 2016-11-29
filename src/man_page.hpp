@@ -1,8 +1,8 @@
 #ifndef MAN_PAGES_HPP
 #define MAN_PAGES_HPP
 
-#include <cstring>
 #include <iostream>
+#include <cstring>
 
 struct ManPageRecord {
 	char name[50];
@@ -21,7 +21,7 @@ struct ManPageRecord {
 	}
 
 	inline bool operator!=(const ManPageRecord& rhs) const {
-		return !(*this == rhs);
+		return strcmp(name, rhs.name) != 0;
 	}
 };
 
@@ -33,6 +33,22 @@ struct ManPage {
 
 	explicit ManPage(const std::string&);
 	explicit ManPage(const ManPageRecord&);
+
+	inline bool operator<(const ManPage& rhs) const {
+		return strcmp(name, rhs.name) < 0;
+	}
+
+	inline bool operator>(const ManPage& rhs) const {
+		return strcmp(name, rhs.name) > 0;
+	}
+
+	inline bool operator==(const ManPage& rhs) const {
+		return strcmp(name, rhs.name) == 0;
+	}
+
+	inline bool operator!=(const ManPage& rhs) const {
+		return strcmp(name, rhs.name) != 0;
+	}
 };
 
 std::ostream& operator<<(std::ostream&, const ManPage&);

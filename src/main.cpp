@@ -1,6 +1,7 @@
+#include <iostream>
 #include "index.hpp"
 #include "search.hpp"
-#include <iostream>
+#include "utils.hpp"
 
 int main(int argc, char** argv) {
 	if (argc < 2) {
@@ -21,7 +22,15 @@ int main(int argc, char** argv) {
 			std::cout << "Command " << argv[2] << " not found" << std::endl;
 		}
 	} else if (strcmp(argv[1], "-w") == 0) {
-		search_by_word(argv[2]);
+		auto man_pages = search_by_word(argv[2]);
+		if (man_pages.empty()) {
+			std::cout << "No man pages contain '" << argv[2] << "'"
+				<< std::endl;
+		} else {
+			std::cout << "Man pages that contain '" << argv[2] << "':"
+				<< std::endl;
+			std::cout << man_pages << std::endl;
+		}
 	}
 	return 0;
 }

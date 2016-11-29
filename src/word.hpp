@@ -1,16 +1,10 @@
 #ifndef WORD_HPP
 #define WORD_HPP
 
-struct Word {
-	char name[50];
-	std::size_t index = 0u;
-	std::streampos pos[5650];
-
-	void add(std::streampos _pos) {
-		pos[index] = _pos;
-		++index;
-	}
-};
+#include <cstring>
+#include <set>
+#include <fstream>
+#include "man_page.hpp"
 
 struct WordPtr {
 	char name[50];
@@ -31,6 +25,20 @@ struct WordPtr {
 	inline bool operator!=(const WordPtr& rhs) const {
 		return !(*this == rhs);
 	}
+};
+
+struct Word {
+	char name[50];
+	std::size_t index = 0u;
+	std::streampos pos[5650];
+
+	Word() = default;
+
+	explicit Word(const WordPtr& wp);
+
+	void add(std::streampos _pos);
+
+	std::set<ManPage> find_man_pages() const;
 };
 
 #endif

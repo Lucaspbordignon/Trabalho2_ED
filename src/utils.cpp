@@ -33,17 +33,6 @@ std::set<std::string> split(const std::string& str, const char* c) {
 	return output;
 }
 
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
-	os << "{";
-	auto it = v.begin();
-	for (; it != v.end() - 1; ++it) {
-		os << *it << ", ";
-	}
-	os << *it << "}";
-	return os;
-}
-
 void show_progress(const float percentage) {
 	if (percentage <= 1) {
 		std::cout << "[";

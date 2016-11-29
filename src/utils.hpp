@@ -19,7 +19,7 @@
 std::string read_file(const std::string& filename);
 
 /**
- * @brief Splits a std::string into a std::vector
+ * @brief Splits a std::string into a std::set
  * @details For example split("aaa/b/ce", "/") returns {"aaa", "b", "ce"}
  *
  * @param str The string that'll be splitted
@@ -31,7 +31,23 @@ std::set<std::string> split(const std::string& str, const char* c);
  * @brief Overloads the << operator for std::vector for printing
  */
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& v);
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
+	os << "{";
+	auto it = v.begin();
+	for (; it != v.end() - 1; ++it) {
+		os << *it << ", ";
+	}
+	os << *it << "}";
+	return os;
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const std::set<T>& s) {
+	for (auto it = s.begin(); it != s.end(); ++it) {
+		os << *it << " ";
+	}
+	return os;
+}
 
 /**
  * @brief A basic progress bar is shown
