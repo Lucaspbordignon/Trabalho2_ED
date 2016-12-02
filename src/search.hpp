@@ -55,6 +55,7 @@ std::set<ManPage> search_by_many_words(std::vector<std::string> text_vector) {
 				++second_begin;
 			}
 		}
+
 		actual_words_set = result;
 	}
 	return result;

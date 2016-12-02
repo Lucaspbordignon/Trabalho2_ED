@@ -44,7 +44,7 @@ void inverted_index() {
 			all_manpages.read((char*)&manpage, sizeof(ManPage));
 			current_pos = all_manpages.tellg()) {
 		if(++i % 100 == 0) {
-			std::cout << i << " man pages indexed\r";
+			std::cout << "Man pages indexed: " << i << "\r";
 			std::cout.flush();
 		}
 
