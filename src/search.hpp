@@ -30,4 +30,34 @@ std::set<ManPage> search_by_word(std::string text) {
 	return word.find_man_pages();
 }
 
+std::set<ManPage> search_by_many_words(std::vector<std::string> text_vector) {
+	std::set<ManPage> result;
+
+	std::set<ManPage> actual_words_set = search_by_word(text_vector[0]);
+	if (!actual_words_set.size()) return actual_words_set;
+
+	for (auto i = 1u; i < text_vector.size(); ++i) {
+		std::set<ManPage> to_compare = search_by_word(text_vector[i]);
+		if (!to_compare.size()) return to_compare;
+
+		// Intersection
+		auto first_begin = actual_words_set.begin();
+		auto first_end = actual_words_set.end();
+		auto second_begin = to_compare.begin();
+		auto second_end = to_compare.end();
+		result.clear();
+		while (first_begin != first_end && second_begin != second_end) {
+			if (*first_begin < *second_begin) ++first_begin;
+			else if (*second_begin < *first_begin) ++second_begin;
+			else {
+				result.insert(*first_begin);
+				++first_begin;
+				++second_begin;
+			}
+		}
+		actual_words_set = result;
+	}
+	return result;
+}
+
 #endif

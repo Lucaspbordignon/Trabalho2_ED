@@ -6,7 +6,9 @@
 int main(int argc, char** argv) {
 	if (argc < 2) {
 		std::cout << "Usage:\n" << argv[0] << " -i files\n" <<
-			argv[0] << " -s command\n";
+			argv[0] << " -s command\n" <<
+			argv[0] << " -w word\n" <<
+			argv[0] << " -d words to search\n";
 	} else if (strcmp(argv[1], "-i") == 0) {
 		std::vector<std::string> files;
 		for (int i = 2; i < argc; ++i) {
@@ -31,6 +33,21 @@ int main(int argc, char** argv) {
 				<< std::endl;
 			std::cout << man_pages << std::endl;
 		}
+	} else if (strcmp(argv[1], "-d") == 0) {
+		std::vector<std::string> words_to_search;
+		for (auto i = 2; i < argc; ++i)
+			words_to_search.push_back(argv[i]);
+
+		auto man_pages = search_by_many_words(words_to_search);
+		if (man_pages.empty()) {
+			std::cout << "No man pages contain these words."
+				<< std::endl;
+		} else {
+			std::cout << "Man pages that contain these words:"
+				<< std::endl;
+			std::cout << man_pages << std::endl;
+		}
+
 	}
 	return 0;
 }
