@@ -3,6 +3,7 @@
 
 #include <string>
 #include "man_page.hpp"
+#include "word.hpp"
 #include "paths.hpp"
 #include "avl_tree.hpp"
 
@@ -33,12 +34,23 @@ std::set<ManPage> search_by_word(std::string text) {
 std::set<ManPage> search_by_many_words(std::vector<std::string> text_vector) {
 	std::set<ManPage> result;
 
-	std::set<ManPage> actual_words_set = search_by_word(text_vector[0]);
-	if (!actual_words_set.size()) return actual_words_set;
+	std::vector<Word> words_vector;
+	structures::AVLTree<WordPtr> tree{INVERTED_INDEX_TREE};
 
-	for (auto i = 1u; i < text_vector.size(); ++i) {
-		std::set<ManPage> to_compare = search_by_word(text_vector[i]);
-		if (!to_compare.size()) return to_compare;
+	for (auto i = 0u; i < text_vector.size(); ++i) {
+		WordPtr wordptr;
+		strcpy(wordptr.name, text_vector[i].c_str());
+		try {
+			Word word_found = Word{tree.find(wordptr)};
+			words_vector.push_back(word_found);
+		} catch (std::runtime_error &error) {
+			return result;
+		}
+	}
+
+	auto actual_words_set = words_vector.front().find_man_pages();
+	for (auto i = words_vector.begin(); i != words_vector.end(); ++i) {
+		std::set<ManPage> to_compare = (*i).find_man_pages();
 
 		// Intersection
 		auto first_begin = actual_words_set.begin();
@@ -55,7 +67,6 @@ std::set<ManPage> search_by_many_words(std::vector<std::string> text_vector) {
 				++second_begin;
 			}
 		}
-
 		actual_words_set = result;
 	}
 	return result;
