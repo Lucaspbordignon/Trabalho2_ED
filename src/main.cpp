@@ -6,7 +6,7 @@
 int main(int argc, char** argv) {
 	if (argc < 2) {
 		std::cout << "Usage:\n" << argv[0] << " -i files\n" <<
-			argv[0] << " -s command\n" <<
+			argv[0] << " -[s|S] command\n" <<
 			argv[0] << " -w word(s)\n";
 	} else if (strcmp(argv[1], "-i") == 0) {
 		std::vector<std::string> files;
@@ -19,6 +19,12 @@ int main(int argc, char** argv) {
 		try {
 			std::cout << "Command " << search_by_name(argv[2]) << " found"
 				<< std::endl;
+		} catch(std::runtime_error e) {
+			std::cout << "Command " << argv[2] << " not found" << std::endl;
+		}
+	} else if (strcmp(argv[1], "-S") == 0) {
+		try {
+			std::cout << search_by_name(argv[2]).content << std::endl;
 		} catch(std::runtime_error e) {
 			std::cout << "Command " << argv[2] << " not found" << std::endl;
 		}
