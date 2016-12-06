@@ -4,13 +4,11 @@
 
 ManPage::ManPage(const std::string& filename) {
 	auto str = read_file(filename);
-
-	auto begin = str.find_first_of("\n") + 1;
-	// find first space OR comma
-	auto end = str.find_first_of(" ,", begin) - begin;
-
-	strcpy(name, str.substr(begin, end).c_str());
 	strcpy(content, str.c_str());
+
+	auto begin = filename.find_last_of("/") + 1;
+	auto end = filename.find_last_of(".") - begin;
+	strcpy(name, filename.substr(begin, end).c_str());
 }
 
 ManPage::ManPage(const ManPageRecord& mpr) {

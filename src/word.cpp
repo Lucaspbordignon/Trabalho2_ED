@@ -20,7 +20,7 @@ void Word::add(std::streampos _pos) {
 }
 
 std::set<ManPage> Word::find_man_pages() const {
-	std::ifstream all_manpages(MANPAGES, std::ios::in | std::ios::binary);
+	std::ifstream all_manpages{MANPAGES, std::ios::in | std::ios::binary};
 	std::set<ManPage> output;
 
 	ManPage mp;
@@ -35,6 +35,21 @@ std::set<ManPage> Word::find_man_pages() const {
 	return output;
 }
 
+// Creates a new word in the inverted index file
+std::streampos Word::save() const {
+	std::ofstream output{INVERTED_INDEX, std::ios::app | std::ios::binary};
+
+	if (!output) {
+		throw std::runtime_error("Word::save(): Couldn't open file");
+	}
+
+	auto position = output.tellp();
+	output.write((char*) this, sizeof(Word));
+	output.close();
+
+	return position;
+}
+
 // Add a manpage into an existing word. Means that the record already exists
 // into the tree.
 void WordPtr::add_manpage_to_word(const std::streampos& mp_position) const {
@@ -42,7 +57,8 @@ void WordPtr::add_manpage_to_word(const std::streampos& mp_position) const {
 		std::ios::in | std::ios::out | std::ios::binary};
 
 	if (!fs) {
-		throw std::runtime_error("add_manpage_to_word(): Couldn't open file");
+		throw std::runtime_error("WordPtr::add_manpage_to_word(): "
+				"Couldn't open file");
 	}
 
 	Word word;

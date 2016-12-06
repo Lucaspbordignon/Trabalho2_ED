@@ -7,20 +7,6 @@
 #include "word.hpp"
 #include "avl_tree.hpp"
 
-std::streampos add_new_word(Word& word) {
-	std::ofstream output{INVERTED_INDEX, std::ios::app | std::ios::binary};
-
-	if (!output) {
-		throw std::runtime_error("add_new_word(): Couldn't open file");
-	}
-
-	auto position = output.tellp();
-	output.write((char*) &word, sizeof(Word));
-	output.close();
-
-	return position;
-}
-
 void inverted_index() {
 	// Creates the tree with the valid words
 	std::cout << "Generating the inverted index file." << std::endl;
@@ -64,7 +50,7 @@ void inverted_index() {
 				Word word;
 				strcpy(word.name, (*i).c_str());
 				word.add(current_pos);
-				wordptr.pos = add_new_word(word);
+				wordptr.pos = word.save();
 				word_tree.insert(wordptr);
 				found = false;
 			}

@@ -41,6 +41,8 @@ struct Word {
 	void add(std::streampos _pos);
 
 	std::set<ManPage> find_man_pages() const;
+
+	std::streampos save() const;
 };
 
 #endif
