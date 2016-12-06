@@ -29,31 +29,17 @@ int main(int argc, char** argv) {
 			std::cout << "Command " << argv[2] << " not found" << std::endl;
 		}
 	} else if (strcmp(argv[1], "-w") == 0) {
-		if (argc == 3) {
-			// Only one word
-			auto man_pages = search_by_word(argv[2]);
-			if (man_pages.empty()) {
-				std::cout << "No man pages contain '" << argv[2] << "'"
-					<< std::endl;
-			} else {
-				std::cout << "Man pages that contain '" << argv[2] << "':"
-					<< std::endl;
-				std::cout << man_pages << std::endl;
-			}
+		std::vector<std::string> words_to_search;
+		for (auto i = 2; i < argc; ++i)
+			words_to_search.push_back(argv[i]);
+		auto man_pages = search_by_words(words_to_search);
+		if (man_pages.empty()) {
+			std::cout << "No man pages contain these word(s)."
+				<< std::endl;
 		} else {
-			// Two or more words
-			std::vector<std::string> words_to_search;
-			for (auto i = 2; i < argc; ++i)
-				words_to_search.push_back(argv[i]);
-			auto man_pages = search_by_many_words(words_to_search);
-			if (man_pages.empty()) {
-				std::cout << "No man pages contain these words."
-					<< std::endl;
-			} else {
-				std::cout << "Man pages that contain these words:"
-					<< std::endl;
-				std::cout << man_pages << std::endl;
-			}
+			std::cout << "Man pages that contain these word(s):"
+				<< std::endl;
+			std::cout << man_pages << std::endl;
 		}
 	}
 

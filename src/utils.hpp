@@ -28,7 +28,7 @@ std::string read_file(const std::string& filename);
 std::set<std::string> split(const std::string& str, const char* c);
 
 /**
- * @brief Overloads the << operator for std::vector for printing
+ * @brief Overloads the << operator of std::vector for printing
  */
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
@@ -41,6 +41,9 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 	return os;
 }
 
+/**
+ * @brief Overloads the << operator of std::set for printing
+ */
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::set<T>& s) {
 	for (auto it = s.begin(); it != s.end(); ++it) {
@@ -62,8 +65,9 @@ void replace_chars(std::string&, const std::string&, const char);
 bool check_word(std::string);
 std::set<std::string> words_into_text(std::string);
 
-const std::string special_chars = "\n\r\t,.;\"'!@#$%%^&*()[]{}+-/<>?\\`~_:|0123456789";
-const std::vector<std::string> connection_words = {
+const std::string special_chars =
+		"\n\r\t,.;\"'!@#$%%^&*()[]{}+-/<>?\\`~_:|0123456789";
+const std::set<std::string> connection_words = {
 	"and", "that", "but", "or", "as", "if", "when", "than", "because",
 	"while", "where", "after", "so", "though", "since", "until",
 	"whether", "before", "although", "nor", "like", "once", "unless",

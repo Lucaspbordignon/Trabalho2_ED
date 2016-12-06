@@ -49,14 +49,14 @@ void show_progress(const float percentage) {
 	}
 }
 
-void replace_chars(std::string& str, const std::string& to_replace, const char by) {
+void replace_chars(std::string& str, const std::string& to_replace,
+		const char by) {
 	for (auto i = to_replace.begin(); i != to_replace.end(); ++i)
 		std::replace(str.begin(), str.end(), *i, by);
 }
 
 bool check_word(std::string str) {
-	auto found = find(connection_words.begin(), connection_words.end(), str) != connection_words.end();
-	return !found && (str.size() > 2);
+	return connection_words.find(str) == connection_words.end();
 }
 
 std::set<std::string> words_into_text(std::string text) {

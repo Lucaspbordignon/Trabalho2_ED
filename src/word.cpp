@@ -1,6 +1,9 @@
 #include "word.hpp"
 #include "paths.hpp"
 
+/**
+ * @brief Loads a previously saved Word object
+ */
 Word::Word(const WordPtr& wp) {
 	std::ifstream input{INVERTED_INDEX, std::ios::in | std::ios::binary};
 
@@ -14,11 +17,17 @@ Word::Word(const WordPtr& wp) {
 	input.close();
 }
 
+/**
+ * @brief Adds a man page that contains the word
+ */
 void Word::add(std::streampos _pos) {
 	pos[index] = _pos;
 	++index;
 }
 
+/**
+ * @brief Returns all the man pages that contains the word
+ */
 std::set<ManPage> Word::find_man_pages() const {
 	std::ifstream all_manpages{MANPAGES, std::ios::in | std::ios::binary};
 	std::set<ManPage> output;
@@ -35,7 +44,9 @@ std::set<ManPage> Word::find_man_pages() const {
 	return output;
 }
 
-// Creates a new word in the inverted index file
+/**
+ * @brief Creates a new word in the inverted index file
+ */
 std::streampos Word::save() const {
 	std::ofstream output{INVERTED_INDEX, std::ios::app | std::ios::binary};
 
@@ -50,8 +61,10 @@ std::streampos Word::save() const {
 	return position;
 }
 
-// Add a manpage into an existing word. Means that the record already exists
-// into the tree.
+/**
+ * @brief Add a manpage into an existing word. Means that the record already
+ * exists in the tree.
+ */
 void WordPtr::add_manpage_to_word(const std::streampos& mp_position) const {
 	std::fstream fs{INVERTED_INDEX,
 		std::ios::in | std::ios::out | std::ios::binary};

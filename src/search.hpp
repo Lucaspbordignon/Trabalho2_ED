@@ -14,24 +14,7 @@ ManPage search_by_name(const char* mp_name) {
 	return ManPage{mptree.find(mpr)};
 }
 
-std::set<ManPage> search_by_word(std::string text) {
-	structures::AVLTree<WordPtr> tree{INVERTED_INDEX_TREE};
-	WordPtr wordptr;
-
-	// Transform to lowercase
-	std::transform(text.begin(), text.end(), text.begin(), ::tolower);
-	strcpy(wordptr.name, text.c_str());
-
-	Word word;
-
-	try {
-		word = Word{tree.find(wordptr)};
-	} catch (std::runtime_error &error) {}
-
-	return word.find_man_pages();
-}
-
-std::set<ManPage> search_by_many_words(std::vector<std::string> text_vector) {
+std::set<ManPage> search_by_words(std::vector<std::string> text_vector) {
 	std::set<ManPage> result;
 
 	std::vector<Word> words_vector;
@@ -69,6 +52,7 @@ std::set<ManPage> search_by_many_words(std::vector<std::string> text_vector) {
 		}
 		actual_words_set = result;
 	}
+
 	return result;
 }
 

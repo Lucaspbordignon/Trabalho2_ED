@@ -2,6 +2,9 @@
 #include "utils.hpp"
 #include "paths.hpp"
 
+/**
+ * @brief Creates the ManPage object from a file (.txt)
+ */
 ManPage::ManPage(const std::string& filename) {
 	auto str = read_file(filename);
 	strcpy(content, str.c_str());
@@ -11,6 +14,9 @@ ManPage::ManPage(const std::string& filename) {
 	strcpy(name, filename.substr(begin, end).c_str());
 }
 
+/**
+ * @brief Loads a previously saved ManPage object
+ */
 ManPage::ManPage(const ManPageRecord& mpr) {
 	std::ifstream ifs{MANPAGES, std::ifstream::binary};
 
